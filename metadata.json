@@ -1,0 +1,6 @@
+{
+  "name": "AI Career Assistant",
+  "description": "Production RAG engine for ATS resume matching, bullet optimization, STAR interview prep, and document chat.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: career-assistant-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_security_pass
+      MYSQL_DATABASE: career_assistant
+      MYSQL_USER: assistant_user
+      MYSQL_PASSWORD: assistant_secure_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pget_pass"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    container_name: career-assistant-web
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - DB_HOST=db
+      - DB_NAME=career_assistant
+      - DB_USER=assistant_user
+      - DB_PASSWORD=assistant_secure_pass
+      - OLLAMA_HOST=http://host.docker.internal:11434
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./uploads:/app/uploads
+
+volumes:
+  mysql_data:

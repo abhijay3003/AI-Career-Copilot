@@ -1,0 +1,10 @@
+flask==3.0.2
+mysql-connector-python==8.3.0
+langchain==0.1.12
+langchain-community==0.0.28
+pypdf==4.1.0
+faiss-cpu==1.8.0
+sentence-transformers==2.5.1
+requests==2.31.0
+gunicorn==21.2.0
+python-dotenv==1.0.1
